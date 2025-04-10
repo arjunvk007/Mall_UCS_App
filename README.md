@@ -72,8 +72,6 @@ streamlit run app.py
 - Interactive customer clustering using K-Means
 - Customizable number of clusters
 - Beautiful UI with custom CSS
-- Modular code structure with reusable functions
-- Multi-page layout for scalability
 
 ---
 
@@ -83,7 +81,6 @@ The dataset used is:
 
 - **File:** `mall_customers.csv`
 - **Columns:** `CustomerID`, `Gender`, `Age`, `Annual Income (k$)`, `Spending Score (1-100)`
-- **Source:** Kaggle or simulated data
 
 ---
 
@@ -109,6 +106,10 @@ You can deploy this Streamlit app on:
 
 ---
 
+## Link
+
+https://mallucsapp-arjunvk.streamlit.app/
+
 ## 📜 License
 
 Licensed under the [MIT License](LICENSE).
@@ -124,4 +125,4 @@ Feel free to fork this repository and make improvements or adjustments. Pull req
 ## ✉️ Contact
 
 - **Author:** Arjun Vannathan Kandy  
-- **GitHub:** [[arjunvk007](https://github.com/arjunvk007)](https://mallucsapp-arjunvk.streamlit.app/)
+- **GitHub:** [[arjunvk007](https://github.com/arjunvk007)]
