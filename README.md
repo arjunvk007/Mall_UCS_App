@@ -27,10 +27,7 @@ Mall_UCS_App/
 ├── utils/
 │   ├── __init__.py
 │   ├── cluster_model.py         
-│   └── load_data.py             
-│
-└── pages/
-    └── Overview.py             
+│   └── load_data.py                         
 ```
 
 ---
