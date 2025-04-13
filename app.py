@@ -15,6 +15,18 @@ This interactive dashboard allows you to explore customer behavior using **unsup
 Upload your customer dataset, apply **K-Means clustering**, analyze the segments, and predict cluster for new input.
 """)
 
+# Step 1: Upload CSV
+uploaded_file = st.file_uploader("📂 Upload a CSV file with customer data", type=["csv"])
+
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    st.subheader("📊 Preview of Uploaded Data")
+    st.dataframe(df.head())
+
+    if st.checkbox("Show summary statistics"):
+        st.write(df.describe())
+
+
         # Step 6: Input for prediction
         st.subheader("🧮 Predict Cluster for New Customer Input")
         input_data = []
@@ -41,3 +53,24 @@ Upload your customer dataset, apply **K-Means clustering**, analyze the segments
                 st.pyplot(plt.gcf())
 else:
     st.info("Please upload a dataset to begin.")
+
+
+    # Step 2: Select features for clustering
+    numeric_columns = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
+    selected_features = st.multiselect("🧬 Select features for clustering", numeric_columns, default=numeric_columns)
+
+    if selected_features:
+        X = df[selected_features]
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+
+        # Step 3: Choose number of clusters
+        k = st.slider("🔢 Select number of clusters (K)", 2, 10, 3)
+
+        # Step 4: Fit KMeans
+        kmeans = KMeans(n_clusters=k, random_state=42)
+        clusters = kmeans.fit_predict(X_scaled)
+        df['Cluster'] = clusters
+
+        st.subheader("📌 Clustered Data")
+        st.dataframe(df.head())
