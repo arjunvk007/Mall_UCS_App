@@ -26,6 +26,37 @@ if uploaded_file is not None:
     if st.checkbox("Show summary statistics"):
         st.write(df.describe())
 
+    # Step 2: Select features for clustering
+    numeric_columns = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
+    selected_features = st.multiselect("🧬 Select features for clustering", numeric_columns, default=numeric_columns)
+
+    if selected_features:
+        X = df[selected_features]
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+
+        # Step 3: Choose number of clusters
+        k = st.slider("🔢 Select number of clusters (K)", 2, 10, 3)
+
+        # Step 4: Fit KMeans
+        kmeans = KMeans(n_clusters=k, random_state=42)
+        clusters = kmeans.fit_predict(X_scaled)
+        df['Cluster'] = clusters
+
+        st.subheader("📌 Clustered Data")
+        st.dataframe(df.head())
+
+        # Step 5: Cluster Visualization
+        st.subheader("📈 Cluster Visualization")
+        if len(selected_features) >= 2:
+            x_axis = st.selectbox("X-axis", selected_features, index=0)
+            y_axis = st.selectbox("Y-axis", selected_features, index=1)
+
+            plt.figure(figsize=(10, 6))
+            sns.scatterplot(data=df, x=x_axis, y=y_axis, hue='Cluster', palette='tab10')
+            st.pyplot(plt.gcf())
+        else:
+            st.warning("Please select at least two features for visualization.")
 
         # Step 6: Input for prediction
         st.subheader("🧮 Predict Cluster for New Customer Input")
@@ -54,23 +85,3 @@ if uploaded_file is not None:
 else:
     st.info("Please upload a dataset to begin.")
 
-
-    # Step 2: Select features for clustering
-    numeric_columns = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
-    selected_features = st.multiselect("🧬 Select features for clustering", numeric_columns, default=numeric_columns)
-
-    if selected_features:
-        X = df[selected_features]
-        scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(X)
-
-        # Step 3: Choose number of clusters
-        k = st.slider("🔢 Select number of clusters (K)", 2, 10, 3)
-
-        # Step 4: Fit KMeans
-        kmeans = KMeans(n_clusters=k, random_state=42)
-        clusters = kmeans.fit_predict(X_scaled)
-        df['Cluster'] = clusters
-
-        st.subheader("📌 Clustered Data")
-        st.dataframe(df.head())
