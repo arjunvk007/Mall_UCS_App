@@ -13,7 +13,6 @@ st.title("🧠 Customer Behavior Dashboard using Unsupervised Learning")
 
 st.markdown("""
 This interactive dashboard explores customer behavior using **unsupervised learning** with **K-Means clustering**.
-Instead of uploading a file, the app reads from `Admission(in).csv`.
 """)
 
 # Step 1: Read CSV from local directory
